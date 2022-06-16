@@ -10,10 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-    <PackageReference Include="MongoDB.Driver" Version="2.15.1" />
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,7 +35,6 @@
   <ItemGroup>
     <Folder Include="Dto\" />
     <Folder Include="Profiles\" />
-    <Folder Include="Middlwares\" />
     <Folder Include="Controllers\" />
   </ItemGroup>
 </Project>
