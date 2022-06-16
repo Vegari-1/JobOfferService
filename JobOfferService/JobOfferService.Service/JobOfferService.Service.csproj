@@ -8,5 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JobOfferService.Service.Interface\JobOfferService.Service.Interface.csproj" />
+    <ProjectReference Include="..\JobOfferService.Messaging\JobOfferService.Messaging.csproj" />
   </ItemGroup>
 </Project>

@@ -29,6 +29,16 @@ namespace JobOfferService
             var response = _mapper.Map<ICollection<JobOfferResponse>>(jobOfferList);
             return Ok(response);
         }
+
+        // Just for example purposes
+        [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(ICollection<JobOffer>), 200)]
+        public async Task<IActionResult> Publish(JobOfferResponse JobOfferResponse)
+        {
+            var jobOffer = await _jobOfferService.PublishToQue(JobOfferResponse.Id);
+            return Ok(jobOffer);
+        }
     }
 }
 
