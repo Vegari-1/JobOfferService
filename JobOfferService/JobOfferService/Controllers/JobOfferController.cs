@@ -37,7 +37,7 @@ namespace JobOfferService
         public async Task<IActionResult> Publish(JobOfferResponse JobOfferResponse)
         {
             var jobOffer = await _jobOfferService.PublishToQue(JobOfferResponse.Id);
-            return Ok(jobOffer);
+            return Ok(_mapper.Map<JobOfferResponse>(jobOffer));
         }
     }
 }
