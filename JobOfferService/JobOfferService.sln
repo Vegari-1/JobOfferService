@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobOfferService.Service.Int
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobOfferService.Service", "JobOfferService.Service\JobOfferService.Service.csproj", "{5D1C55B6-8E8F-431F-8862-95729D9E5FC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobOfferService.Messaging", "JobOfferService.Messaging\JobOfferService.Messaging.csproj", "{3903A6CB-5503-4169-9BB2-00C99DBFE64A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobOfferService.Messaging", "JobOfferService.Messaging\JobOfferService.Messaging.csproj", "{3903A6CB-5503-4169-9BB2-00C99DBFE64A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobOfferService.IntegrationTests", "JobOfferService.IntegrationTests\JobOfferService.IntegrationTests.csproj", "{BB067908-21E7-48C8-9DCB-EC7B05BDD55C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{3903A6CB-5503-4169-9BB2-00C99DBFE64A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3903A6CB-5503-4169-9BB2-00C99DBFE64A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3903A6CB-5503-4169-9BB2-00C99DBFE64A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB067908-21E7-48C8-9DCB-EC7B05BDD55C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB067908-21E7-48C8-9DCB-EC7B05BDD55C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB067908-21E7-48C8-9DCB-EC7B05BDD55C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB067908-21E7-48C8-9DCB-EC7B05BDD55C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
