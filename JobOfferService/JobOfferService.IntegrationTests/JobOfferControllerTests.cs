@@ -24,7 +24,7 @@ namespace JobOfferService.IntegrationTests
         }
 
         [Fact]
-        public async Task ConnectionEstablished()
+        public async Task GetJobOffers_CorrectData_CollectionJobOfferResponse()
         {
             // Given
             string jobOfferId = _factory.InsertJobOffer(positionName, description);
@@ -46,7 +46,7 @@ namespace JobOfferService.IntegrationTests
         }
 
         [Fact]
-        public async Task Proba()
+        public async Task Publish_CorrectData_JobOfferResponse()
         {
             // Given
             string jobOfferId = _factory.InsertJobOffer(positionName, description);
