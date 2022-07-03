@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+
 using JobOfferService.Model;
 
 namespace JobOfferService.Repository.Interface

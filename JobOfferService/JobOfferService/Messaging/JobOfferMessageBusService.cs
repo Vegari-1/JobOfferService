@@ -1,9 +1,10 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
 
-using JobOfferService.Messaging;
-using JobOfferService.Model;
+using BusService;
+using BusService.Routing;
 
+using JobOfferService.Model;
 
 namespace JobOfferService.JobOfferMessaging
 {
@@ -15,7 +16,7 @@ namespace JobOfferService.JobOfferMessaging
         {
             // Add MessageSubscriber subscribers to the list of subscribers
             Subscribers.Add(new MessageBusSubscriber(
-                SubjectBuilder.Build(Topic.JOB_OFFER), 
+                SubjectBuilder.Build(Topics.JobOffer), 
                 (sender, args) => {
                     var data = JsonConvert.DeserializeObject<JobOffer>(Encoding.UTF8.GetString(args.Message.Data));
                     if (data != null)
