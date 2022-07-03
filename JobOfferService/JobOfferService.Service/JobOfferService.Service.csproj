@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JobOfferService.Service.Interface\JobOfferService.Service.Interface.csproj" />
-    <ProjectReference Include="..\JobOfferService.Messaging\JobOfferService.Messaging.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="BusService" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BusService" Version="1.0.0-dev.1" />
   </ItemGroup>
 </Project>

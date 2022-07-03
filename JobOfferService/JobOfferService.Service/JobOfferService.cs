@@ -1,11 +1,13 @@
-using JobOfferService.Model;
-using JobOfferService.Repository.Interface;
-using JobOfferService.Service.Interface;
-using JobOfferService.Service.Messaging;
-using JobOfferService.Messaging;
 
 using System.Text;
 using Newtonsoft.Json;
+
+using BusService;
+using BusService.Routing;
+
+using JobOfferService.Model;
+using JobOfferService.Repository.Interface;
+using JobOfferService.Service.Interface;
 
 namespace JobOfferService.Service;
 public class JobOfferService : IJobOfferService
@@ -38,7 +40,7 @@ public class JobOfferService : IJobOfferService
         var bdata = Encoding.UTF8.GetBytes(data);
         if (data != null)
         {
-            _messageBusService.PublishEvent(SubjectBuilder.Build(Topic.JOB_OFFER, TopicEvent.CREATED_EVENT), bdata);
+            _messageBusService.PublishEvent(SubjectBuilder.Build(Topics.JobOffer, Events.Created), bdata);
         }
         return jobOffer;
     }

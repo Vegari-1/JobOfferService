@@ -1,8 +1,10 @@
 ﻿using System.Linq.Expressions;
-using JobOfferService.Model;
-using JobOfferService.Repository.Interface;
+
 using MongoDB.Bson;
 using MongoDB.Driver;
+
+using JobOfferService.Model;
+using JobOfferService.Repository.Interface;
 
 namespace JobOfferService.Repository
 {

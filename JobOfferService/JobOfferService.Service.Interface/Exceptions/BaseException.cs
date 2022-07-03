@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace JobOfferService.Service.Interface.Exceptions
 {
 	public class BaseException : Exception

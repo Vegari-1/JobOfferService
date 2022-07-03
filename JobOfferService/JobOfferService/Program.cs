@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Options;
+
+using BusService;
+
 using JobOfferService.Repository;
 using JobOfferService.Repository.Interface;
 using JobOfferService.Service.Interface;
 using JobOfferService.Middlwares;
-using JobOfferService.Messaging;
 using JobOfferService.JobOfferMessaging;
 
 var builder = WebApplication.CreateBuilder(args);
