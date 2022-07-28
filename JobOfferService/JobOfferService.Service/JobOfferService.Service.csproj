@@ -13,6 +13,6 @@
     <None Remove="BusService" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BusService" Version="1.0.0-dev.1" />
+    <PackageReference Include="BusService" Version="1.0.0-dev.3" />
   </ItemGroup>
 </Project>

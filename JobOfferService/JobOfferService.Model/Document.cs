@@ -1,12 +1,12 @@
 ﻿using MongoDB.Bson;
 
-namespace JobOfferService.Model
-{
-	public class Document : IDocument
-	{
-		public ObjectId Id { get; set; }
+namespace JobOfferService.Model;
 
-		public DateTime CreatedAt => Id.CreationTime;
-    }
+public class Document : IDocument
+{
+    public ObjectId Id { get; set; }
+
+    public DateTime CreatedAt => Id.CreationTime;
 }
+
 
