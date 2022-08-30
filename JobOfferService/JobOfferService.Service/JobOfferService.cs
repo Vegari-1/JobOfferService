@@ -1,48 +1,30 @@
-
-using System.Text;
-using Newtonsoft.Json;
-
-using BusService;
-using BusService.Routing;
-
 using JobOfferService.Model;
 using JobOfferService.Repository.Interface;
 using JobOfferService.Service.Interface;
+using PostService.Repository.Interface.Pagination;
 
 namespace JobOfferService.Service;
 public class JobOfferService : IJobOfferService
 {
-
     private readonly IJobOfferRepository _jobOfferRepository;
-    private readonly IMessageBusService _messageBusService;
+    private readonly IJobOfferSyncService _jobOffferSyncService;
 
-    public JobOfferService(IJobOfferRepository jobOfferRepository, IMessageBusService messageBusService)
+    public JobOfferService(IJobOfferRepository jobOfferRepository, IJobOfferSyncService jobOffferSyncService)
     {
         _jobOfferRepository = jobOfferRepository;
-        _messageBusService = messageBusService;
+        _jobOffferSyncService = jobOffferSyncService;
     }
 
-    public Task<JobOffer> Create(JobOffer jobOffer)
+    public async Task<JobOffer> Save(JobOffer jobOffer)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<IList<JobOffer>> Filter()
-    {
-        return Task.Run<IList<JobOffer>>(() => _jobOfferRepository.AsQueryable().ToList());
-    }
-
-    // Example of how to publish message to message queue
-    public async Task<JobOffer> PublishToQue(string Id)
-    {
-        var jobOffer = await _jobOfferRepository.FindByIdAsync(Id);
-        var data = JsonConvert.SerializeObject(jobOffer);
-        var bdata = Encoding.UTF8.GetBytes(data);
-        if (data != null)
-        {
-            _messageBusService.PublishEvent(SubjectBuilder.Build(Topics.JobOffer, Events.Created), bdata);
-        }
+        jobOffer.GlobalId = Guid.NewGuid();
+        await _jobOfferRepository.InsertOneAsync(jobOffer);
         return jobOffer;
+    }
+
+    public Task<PagedList<JobOffer>> Get(PaginationParams paginationParams)
+    {
+        return _jobOfferRepository.FilterByAsync(_ => true, paginationParams);
     }
 }
 

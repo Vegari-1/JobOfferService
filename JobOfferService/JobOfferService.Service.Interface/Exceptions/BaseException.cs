@@ -1,12 +1,9 @@
-﻿using System;
+﻿namespace JobOfferService.Service.Interface.Exceptions;
 
-namespace JobOfferService.Service.Interface.Exceptions
+public class BaseException : Exception
 {
-	public class BaseException : Exception
-	{
-		public int StatusCode { get; set; }
+	public int StatusCode { get; set; }
 
-		public BaseException(string message) : base(message) { }
-	}
+	public BaseException(string message) : base(message) { }
 }
 

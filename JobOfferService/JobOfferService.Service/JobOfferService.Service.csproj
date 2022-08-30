@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,11 +8,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JobOfferService.Service.Interface\JobOfferService.Service.Interface.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="BusService" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="BusService" Version="1.0.0-dev.3" />
   </ItemGroup>
 </Project>

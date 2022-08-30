@@ -1,62 +1,57 @@
 ﻿using AutoMapper;
-using JobOfferService.Dto;
-using JobOfferService.Model;
-using JobOfferService.Service.Interface;
+
 using Microsoft.AspNetCore.Mvc;
 using OpenTracing;
 using Prometheus;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using JobOfferService.Dto;
+using JobOfferService.Model;
+using JobOfferService.Service.Interface;
+using PostService.Repository.Interface.Pagination;
 
-namespace JobOfferService
+namespace JobOfferService;
+
+[Route("api/[controller]")]
+[ApiController]
+public class JobOfferController : Controller
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class JobOfferController : Controller
-    {
-        private readonly IJobOfferService _jobOfferService;
-        private readonly IMapper _mapper;
-        private readonly ITracer _tracer;
+  private readonly IJobOfferService _jobOfferService;
+  private readonly IMapper _mapper;
+  private readonly ITracer _tracer;
 
-        Counter counter = Metrics.CreateCounter("job_offer_service_counter", "job offer counter");
+  Counter counter = Metrics.CreateCounter("job_offer_service_counter", "job offer counter");
 
-        public JobOfferController(IJobOfferService jobOfferService, IMapper mapper, ITracer tracer)
-        {
-            _jobOfferService = jobOfferService;
-            _mapper = mapper;
-            _tracer = tracer;
-        }
+  public JobOfferController(IJobOfferService jobOfferService, IMapper mapper, ITracer tracer)
+  {
+    _jobOfferService = jobOfferService;
+    _mapper = mapper;
+    _tracer = tracer;
+  }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(ICollection<JobOffer>), 200)]
-        public async Task<IActionResult> Filter()
-        {
-            var actionName = ControllerContext.ActionDescriptor.DisplayName;
-            using var scope = _tracer.BuildSpan(actionName).StartActive(true);
-            scope.Span.Log("filter job offers");
+  [HttpGet]
+  public async Task<IActionResult> Get([FromQuery] PaginationParams paginationParams)
+  {
+    var actionName = ControllerContext.ActionDescriptor.DisplayName;
+    using var scope = _tracer.BuildSpan(actionName).StartActive(true);
+    scope.Span.Log("get job offers");
 
-            counter.Inc();
+    counter.Inc();
 
-            var jobOfferList = await _jobOfferService.Filter();
-            var response = _mapper.Map<ICollection<JobOfferResponse>>(jobOfferList);
-            return Ok(response);
-        }
+    var jobOfferList = await _jobOfferService.Get(paginationParams);
+    return Ok(jobOfferList.ToPagedList(_mapper.Map<List<JobOfferResponse>>(jobOfferList.Items)));
+  }
 
-        // Just for example purposes
-        [HttpPost]
-        [Consumes("application/json")]
-        [ProducesResponseType(typeof(ICollection<JobOffer>), 200)]
-        public async Task<IActionResult> Publish(JobOfferResponse JobOfferResponse)
-        {
-            var actionName = ControllerContext.ActionDescriptor.DisplayName;
-            using var scope = _tracer.BuildSpan(actionName).StartActive(true);
-            scope.Span.Log("public job offer");
+  [HttpPost]
+  public async Task<IActionResult> Save([FromBody] JobOfferRequest request)
+  {
+    var actionName = ControllerContext.ActionDescriptor.DisplayName;
+    using var scope = _tracer.BuildSpan(actionName).StartActive(true);
+    scope.Span.Log("save job offer");
 
-            counter.Inc();
+    counter.Inc();
 
-            var jobOffer = await _jobOfferService.PublishToQue(JobOfferResponse.Id);
-            return Ok(_mapper.Map<JobOfferResponse>(jobOffer));
-        }
-    }
+    var jobOffer = await _jobOfferService.Save(_mapper.Map<JobOffer>(request));
+    return StatusCode(StatusCodes.Status201Created, _mapper.Map<JobOfferResponse>(jobOffer));
+  }
 }
 

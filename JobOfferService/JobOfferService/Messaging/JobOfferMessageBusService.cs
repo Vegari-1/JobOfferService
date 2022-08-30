@@ -1,30 +1,32 @@
-﻿using System.Text;
-using Newtonsoft.Json;
+﻿using Polly;
 
 using BusService;
 using BusService.Routing;
 
-using JobOfferService.Model;
+using JobOfferService.Service.Interface;
 
-namespace JobOfferService.JobOfferMessaging
+namespace JobOfferService.JobOfferMessaging;
+public class JobOfferMessageBusService : MessageBusHostedService
 {
-    public class JobOfferMessageBusService : MessageBusHostedService
+    public JobOfferMessageBusService(IMessageBusService serviceBus, IServiceScopeFactory serviceScopeFactory) : base(serviceBus, serviceScopeFactory)
     {
-        public JobOfferMessageBusService(IMessageBusService serviceBus) : base(serviceBus) { }
+    }
 
-        protected override void ConfigureSubscribers()
-        {
-            // Add MessageSubscriber subscribers to the list of subscribers
-            Subscribers.Add(new MessageBusSubscriber(
-                SubjectBuilder.Build(Topics.JobOffer), 
-                (sender, args) => {
-                    var data = JsonConvert.DeserializeObject<JobOffer>(Encoding.UTF8.GetString(args.Message.Data));
-                    if (data != null)
-                    {
-                        Console.WriteLine(data.Id);
-                    }
-                }
-            ));
-        }
+    protected override void ConfigureSubscribers()
+    {
+        var policy = BuildPolicy();
+
+        // Add MessageSubscriber subscribers to the list of subscribers
+        Subscribers.Add(new MessageBusSubscriber(policy, SubjectBuilder.Build(Topics.Profile), typeof(IProfileSyncService)));
+    }
+
+    private Policy BuildPolicy()
+    {
+        return Policy
+                .Handle<Exception>()
+                .WaitAndRetry(5, _ => TimeSpan.FromSeconds(5), (exception, _, _, _) =>
+                {
+                    // TODO: here we should log unsuccessful try to handle event
+                });
     }
 }

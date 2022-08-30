@@ -15,4 +15,7 @@
   <ItemGroup>
     <Folder Include="Exceptions\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BusService" Version="1.0.0-dev.7" />
+  </ItemGroup>
 </Project>

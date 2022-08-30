@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 using JobOfferService.Model.Serialization;
 
-namespace JobOfferService.Model;
+namespace JobOfferService.Model.MongoDB;
 public interface IDocument
 {
     [BsonId]

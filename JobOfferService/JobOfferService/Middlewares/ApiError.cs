@@ -1,9 +1,8 @@
-﻿namespace JobOfferService.Middlwares
+﻿namespace JobOfferService.Middlwares;
+
+public class ApiError
 {
-    public class ApiError
-    {
-        public string Id { get; set; }
-        public string Message { get; set; }
-    }
+    public string Id { get; set; }
+    public string Message { get; set; }
 }
 

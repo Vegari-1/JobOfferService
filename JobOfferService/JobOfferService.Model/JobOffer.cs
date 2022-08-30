@@ -1,8 +1,11 @@
-﻿namespace JobOfferService.Model;
+﻿using JobOfferService.Model.MongoDB;
+
+namespace JobOfferService.Model;
 
 [BsonCollection("jobOffer")]
 public class JobOffer : Document
 {
+    public Guid GlobalId { get; set; }
     public string PositionName { get; set; }
     public string Description { get; set; }
     public IList<string> Qualifications { get; set; }

@@ -1,11 +1,8 @@
-﻿using System;
-namespace JobOfferService.Repository
-{
+﻿namespace JobOfferService.Repository;
 
-    public interface IMongoDbSettings
-    {
-        string DatabaseName { get; set; }
-        string ConnectionString { get; set; }
-    }
+public interface IMongoDbSettings
+{
+    string DatabaseName { get; set; }
+    string ConnectionString { get; set; }
 }
 
