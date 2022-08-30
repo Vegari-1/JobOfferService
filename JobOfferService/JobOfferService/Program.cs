@@ -1,12 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 
-using BusService;
-
-using JobOfferService.Repository;
-using JobOfferService.Repository.Interface;
-using JobOfferService.Service.Interface;
-using JobOfferService.Middlwares;
-using JobOfferService.JobOfferMessaging;
 using OpenTracing;
 using Jaeger.Reporters;
 using Jaeger;
@@ -15,6 +8,14 @@ using Jaeger.Samplers;
 using OpenTracing.Contrib.NetCore.Configuration;
 using OpenTracing.Util;
 using Prometheus;
+
+using BusService;
+
+using JobOfferService.Repository;
+using JobOfferService.Repository.Interface;
+using JobOfferService.Service.Interface;
+using JobOfferService.Middlwares;
+using JobOfferService.JobOfferMessaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,10 @@ builder.Services.AddScoped<IJobOfferRepository, JobOfferRepository>();
 
 // Services
 builder.Services.AddScoped<IJobOfferService, JobOfferService.Service.JobOfferService>();
+
+// Sync services
+builder.Services.AddScoped<IJobOfferSyncService, JobOfferService.Service.JobOfferSyncService>();
+builder.Services.AddScoped<IProfileSyncService, JobOfferService.Service.ProfileSyncService>();
 
 // Controllers
 builder.Services.AddControllers();

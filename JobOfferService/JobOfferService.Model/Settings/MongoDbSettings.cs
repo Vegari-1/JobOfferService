@@ -1,9 +1,8 @@
-﻿namespace JobOfferService.Repository
+﻿namespace JobOfferService.Repository;
+
+public class MongoDbSettings : IMongoDbSettings
 {
-    public class MongoDbSettings : IMongoDbSettings
-    {
-        public string DatabaseName { get; set; }
-        public string ConnectionString { get; set; }
-    }
+    public string DatabaseName { get; set; }
+    public string ConnectionString { get; set; }
 }
 

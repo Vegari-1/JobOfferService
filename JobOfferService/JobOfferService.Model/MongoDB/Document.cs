@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 
-namespace JobOfferService.Model;
+namespace JobOfferService.Model.MongoDB;
 
 public class Document : IDocument
 {

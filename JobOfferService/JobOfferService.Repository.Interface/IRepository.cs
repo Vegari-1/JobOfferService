@@ -1,51 +1,64 @@
 ﻿using System.Linq.Expressions;
+using JobOfferService.Model.MongoDB;
+using MongoDB.Driver;
+using PostService.Repository.Interface.Pagination;
 
-using JobOfferService.Model;
+namespace JobOfferService.Repository.Interface;
 
-namespace JobOfferService.Repository.Interface
+public interface IRepository<T> where T : IDocument
 {
-    public interface IRepository<T> where T : IDocument
-    {
-        IQueryable<T> AsQueryable();
+    IQueryable<T> AsQueryable();
 
-        IEnumerable<T> FilterBy(
-            Expression<Func<T, bool>> filterExpression);
+    PagedList<T> FilterBy(
+        Expression<Func<T, bool>> filterExpression,
+        PaginationParams paginationParams);
 
-        IEnumerable<TProjected> FilterBy<TProjected>(
-            Expression<Func<T, bool>> filterExpression,
-            Expression<Func<T, TProjected>> projectionExpression);
+    Task<PagedList<T>> FilterByAsync(
+        Expression<Func<T, bool>> filterExpression,
+        PaginationParams paginationParams);
 
-        T FindOne(Expression<Func<T, bool>> filterExpression);
+    PagedList<TProjected> FilterBy<TProjected>(
+        Expression<Func<T, bool>> filterExpression,
+        PaginationParams paginationParams,
+        Expression<Func<T, TProjected>> projectionExpression);
 
-        Task<T> FindOneAsync(Expression<Func<T, bool>> filterExpression);
+    Task<PagedList<TProjected>> FilterByAsync<TProjected>(
+        Expression<Func<T, bool>> filterExpression,
+        PaginationParams paginationParams,
+        Expression<Func<T, TProjected>> projectionExpression);
 
-        T FindById(string id);
+    T FindOne(Expression<Func<T, bool>> filterExpression);
 
-        Task<T> FindByIdAsync(string id);
+    Task<T> FindOneAsync(Expression<Func<T, bool>> filterExpression);
 
-        void InsertOne(T document);
+    T FindById(string id);
 
-        Task InsertOneAsync(T document);
+    Task<T> FindByIdAsync(string id);
 
-        void InsertMany(ICollection<T> documents);
+    void InsertOne(T document);
 
-        Task InsertManyAsync(ICollection<T> documents);
+    Task InsertOneAsync(T document);
 
-        void ReplaceOne(T document);
+    void InsertMany(ICollection<T> documents);
 
-        Task ReplaceOneAsync(T document);
+    Task InsertManyAsync(ICollection<T> documents);
 
-        void DeleteOne(Expression<Func<T, bool>> filterExpression);
+    void ReplaceOne(T document);
 
-        Task DeleteOneAsync(Expression<Func<T, bool>> filterExpression);
+    Task ReplaceOneAsync(T document);
 
-        void DeleteById(string id);
+    Task UpdateManyAsync(FilterDefinition<T> filter, UpdateDefinition<T> update);
 
-        Task DeleteByIdAsync(string id);
+    void DeleteOne(Expression<Func<T, bool>> filterExpression);
 
-        void DeleteMany(Expression<Func<T, bool>> filterExpression);
+    Task DeleteOneAsync(Expression<Func<T, bool>> filterExpression);
 
-        Task DeleteManyAsync(Expression<Func<T, bool>> filterExpression);
-    }
+    void DeleteById(string id);
+
+    Task DeleteByIdAsync(string id);
+
+    void DeleteMany(Expression<Func<T, bool>> filterExpression);
+
+    Task DeleteManyAsync(Expression<Func<T, bool>> filterExpression);
 }
 

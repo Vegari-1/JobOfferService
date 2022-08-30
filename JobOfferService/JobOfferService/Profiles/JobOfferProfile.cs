@@ -1,14 +1,15 @@
 ﻿using JobOfferService.Dto;
 using JobOfferService.Model;
 
-namespace JobOfferService
+namespace JobOfferService;
+
+public class JobOfferProfile : AutoMapper.Profile
 {
-	public class JobOfferProfile : AutoMapper.Profile
-	{
-		public JobOfferProfile()
-		{
-			CreateMap<JobOffer, JobOfferResponse>();
-		}
-	}
+    public JobOfferProfile()
+    {
+        // Source -> Target
+        CreateMap<JobOffer, JobOfferResponse>();
+        CreateMap<JobOfferRequest, JobOffer>();
+    }
 }
 

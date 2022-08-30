@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobOfferService", "JobOfferService\JobOfferService.csproj", "{1A3C464D-7071-486C-9754-4F6C87B01214}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobOfferService", "JobOfferService\JobOfferService.csproj", "{1A3C464D-7071-486C-9754-4F6C87B01214}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobOfferService.Model", "JobOfferService.Model\JobOfferService.Model.csproj", "{C4A3447D-85AA-41E4-AA40-0B3B1B73482C}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobOfferService.Service.Int
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobOfferService.Service", "JobOfferService.Service\JobOfferService.Service.csproj", "{5D1C55B6-8E8F-431F-8862-95729D9E5FC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobOfferService.IntegrationTests", "JobOfferService.IntegrationTests\JobOfferService.IntegrationTests.csproj", "{BB067908-21E7-48C8-9DCB-EC7B05BDD55C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobOfferService.IntegrationTests", "JobOfferService.IntegrationTests\JobOfferService.IntegrationTests.csproj", "{BB067908-21E7-48C8-9DCB-EC7B05BDD55C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

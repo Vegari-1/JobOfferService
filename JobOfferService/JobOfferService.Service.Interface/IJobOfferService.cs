@@ -1,10 +1,11 @@
 ﻿using JobOfferService.Model;
+using PostService.Repository.Interface.Pagination;
 
 namespace JobOfferService.Service.Interface;
+
 public interface IJobOfferService
 {
-    Task<JobOffer> Create(JobOffer JobOffer);
-    Task<IList<JobOffer>> Filter();
-    Task<JobOffer> PublishToQue(string Id);
+    Task<JobOffer> Save(JobOffer JobOffer);
+    Task<PagedList<JobOffer>> Get(PaginationParams paginationParams);
 }
 
