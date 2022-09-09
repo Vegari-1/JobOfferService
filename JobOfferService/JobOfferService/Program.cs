@@ -19,6 +19,10 @@ using JobOfferService.JobOfferMessaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Default Logger
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 // Nats
 builder.Services.AddSingleton<IMessageBusService, MessageBusService>();
 builder.Services.Configure<MessageBusSettings>(builder.Configuration.GetSection("Nats"));

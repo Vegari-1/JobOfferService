@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Extensions.Logging;
+
+using MongoDB.Driver;
 
 using BusService;
 using BusService.Contracts;
@@ -13,7 +15,7 @@ public class ProfileSyncService : ConsumerBase<Profile, ProfileContract>, IProfi
     private readonly IMessageBusService _messageBusService;
     private readonly IJobOfferRepository _jobOfferRepository;
 
-    public ProfileSyncService(IMessageBusService messageBusService, IJobOfferRepository jobOfferRepository)
+    public ProfileSyncService(IMessageBusService messageBusService, IJobOfferRepository jobOfferRepository, ILogger<ProfileSyncService> logger) : base(logger)
     {
         _messageBusService = messageBusService;
         _jobOfferRepository = jobOfferRepository;
@@ -33,7 +35,7 @@ public class ProfileSyncService : ConsumerBase<Profile, ProfileContract>, IProfi
             var update = Builders<JobOffer>.Update
                 .Set(x => x.CreatedBy.Name, entity.Name)
                 .Set(x => x.CreatedBy.Surname, entity.Surname);
-                //.Set(x => x.CreatedBy.Avatar, entity.Avatar);
+            //.Set(x => x.CreatedBy.Avatar, entity.Avatar);
             return _jobOfferRepository.UpdateManyAsync(filter, update);
         }
         else if (action == Events.Deleted)

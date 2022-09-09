@@ -1,4 +1,5 @@
-﻿using BusService.Contracts;
+﻿using BusService;
+using BusService.Contracts;
 using JobOfferService.Model;
 
 namespace JobOfferService.Service.Interface;
