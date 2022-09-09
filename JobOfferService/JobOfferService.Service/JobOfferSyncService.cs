@@ -1,4 +1,6 @@
-﻿using BusService;
+﻿using Microsoft.Extensions.Logging;
+
+using BusService;
 using BusService.Contracts;
 
 using JobOfferService.Model;
@@ -10,9 +12,10 @@ public class JobOfferSyncService : ConsumerBase<JobOffer, JobOfferContract>, IJo
 {
     private readonly IMessageBusService _messageBusService;
 
-    public JobOfferSyncService(IMessageBusService messageBusService)
+    public JobOfferSyncService(IMessageBusService messageBusService, ILogger<JobOfferSyncService> logger) : base(logger)
     {
         _messageBusService = messageBusService;
+        _logger = logger;
     }
 
     public override Task PublishAsync(JobOffer entity, string action)

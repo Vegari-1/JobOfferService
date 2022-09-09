@@ -47,12 +47,12 @@ public class JobOfferControllerTests : IClassFixture<IntegrationWebApplicationFa
         var responseContentObject = JsonConvert.DeserializeObject<PagedList<JobOfferResponse>>(responseContentString);
 
         Assert.NotNull(responseContentObject);
-        Assert.Equal(1, responseContentObject.Items.Count);
+        Assert.Equal(1, responseContentObject?.Items.Count);
 
-        Assert.Equal(positionName, responseContentObject.Items.First().PositionName);
-        Assert.Equal(description, responseContentObject.Items.First().Description);
-        Assert.Equal(companyLink, responseContentObject.Items.First().CompanyLink);
-        Assert.Equal(qualifications, responseContentObject.Items.First().Qualifications);
+        Assert.Equal(positionName, responseContentObject?.Items.First().PositionName);
+        Assert.Equal(description, responseContentObject?.Items.First().Description);
+        Assert.Equal(companyLink, responseContentObject?.Items.First().CompanyLink);
+        Assert.Equal(qualifications, responseContentObject?.Items.First().Qualifications);
 
         // Rollback
         _factory.DeleteJobOfferById(jobOfferId);
@@ -80,12 +80,12 @@ public class JobOfferControllerTests : IClassFixture<IntegrationWebApplicationFa
         var responseContentObject = JsonConvert.DeserializeObject<JobOfferResponse>(responseContentString);
 
         Assert.NotNull(responseContentObject);
-        Assert.NotNull(responseContentObject.Id);
+        Assert.NotNull(responseContentObject?.Id);
 
-        Assert.Equal(positionName, responseContentObject.PositionName);
-        Assert.Equal(description, responseContentObject.Description);
-        Assert.Equal(companyLink, responseContentObject.CompanyLink);
-        Assert.Equal(qualifications, responseContentObject.Qualifications);
+        Assert.Equal(positionName, responseContentObject?.PositionName);
+        Assert.Equal(description, responseContentObject?.Description);
+        Assert.Equal(companyLink, responseContentObject?.CompanyLink);
+        Assert.Equal(qualifications, responseContentObject?.Qualifications);
 
         // Rollback
         _factory.DeleteJobOfferById(responseContentObject.Id);
