@@ -1,6 +1,6 @@
 ﻿namespace JobOfferService.Dto;
 
-public class ProfileRequest
+public class ProfileResponse
 {
     public string GlobalId { get; set; }
     public string Name { get; set; }

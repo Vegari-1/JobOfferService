@@ -62,7 +62,7 @@ public class JobOfferControllerTests : IClassFixture<IntegrationWebApplicationFa
     public async Task PostJobOfferRequest_CorrectData_JobOfferResponse()
     {
         // Given
-        JobOfferRequest jobOffer = new()
+        JobOfferPutRequest jobOffer = new()
         {
             PositionName = positionName,
             Description = description,

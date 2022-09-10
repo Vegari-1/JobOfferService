@@ -2,7 +2,7 @@
 
 namespace JobOfferService.Model;
 
-public class Profile : Document
+public class Profile
 {
     public Guid GlobalId { get; set; }
     public string Name { get; set; }

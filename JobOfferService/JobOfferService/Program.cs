@@ -46,7 +46,6 @@ builder.Services.AddScoped<IProfileSyncService, JobOfferService.Service.ProfileS
 // Controllers
 builder.Services.AddControllers();
 
-
 // Automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
