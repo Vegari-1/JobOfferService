@@ -22,8 +22,10 @@ public class JobOfferControllerTests : IClassFixture<IntegrationWebApplicationFa
     private static readonly string companyLink = "https://www.youtube.com/";
     private static readonly string[] qualifications = new[] { "first", "second", "third" };
 
+    private static readonly string authorGlobalId = "13cda049-60c2-4af3-b7c2-8b135009d851";
     private static readonly string authorName = "Author";
     private static readonly string authorSurname = "Creator";
+    private static readonly string authorAvatar = "Avatar:asdaswe23r";
     private static readonly string authorEmail = "author@complex.com";
 
     public JobOfferControllerTests(IntegrationWebApplicationFactory<Program> factory)
@@ -62,12 +64,20 @@ public class JobOfferControllerTests : IClassFixture<IntegrationWebApplicationFa
     public async Task PostJobOfferRequest_CorrectData_JobOfferResponse()
     {
         // Given
-        JobOfferPutRequest jobOffer = new()
+        JobOfferPostRequest jobOffer = new()
         {
             PositionName = positionName,
             Description = description,
             CompanyLink = companyLink,
-            Qualifications = qualifications
+            Qualifications = qualifications,
+            Profile = new()
+            {
+                Avatar = authorAvatar,
+                Name = authorName,
+                Surname = authorSurname,
+                GlobalId = authorGlobalId
+            }
+
         };
         var requestContent = new StringContent(JsonConvert.SerializeObject(jobOffer), Encoding.UTF8, "application/json");
 
@@ -86,6 +96,11 @@ public class JobOfferControllerTests : IClassFixture<IntegrationWebApplicationFa
         Assert.Equal(description, responseContentObject?.Description);
         Assert.Equal(companyLink, responseContentObject?.CompanyLink);
         Assert.Equal(qualifications, responseContentObject?.Qualifications);
+
+        Assert.Equal(authorName, responseContentObject?.Profile?.Name);
+        Assert.Equal(authorSurname, responseContentObject?.Profile?.Surname);
+        Assert.Equal(authorAvatar, responseContentObject?.Profile?.Avatar);
+        Assert.Equal(authorGlobalId, responseContentObject?.Profile?.GlobalId);
 
         // Rollback
         _factory.DeleteJobOfferById(responseContentObject.Id);

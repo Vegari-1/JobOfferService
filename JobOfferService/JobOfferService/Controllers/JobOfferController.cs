@@ -19,7 +19,7 @@ public class JobOfferController : Controller
     private readonly IMapper _mapper;
     private readonly ITracer _tracer;
 
-    Counter counter = Metrics.CreateCounter("job_offer_service_counter", "job offer counter");
+    readonly Counter counter = Metrics.CreateCounter("job_offer_service_counter", "job offer counter");
 
     public JobOfferController(IJobOfferService jobOfferService, IMapper mapper, ITracer tracer)
     {
@@ -29,7 +29,7 @@ public class JobOfferController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] PaginationParams paginationParams)
+    public async Task<IActionResult> Get([FromQuery] PaginationParams paginationParams, string? query)
     {
         var actionName = ControllerContext.ActionDescriptor.DisplayName;
         using var scope = _tracer.BuildSpan(actionName).StartActive(true);
@@ -37,7 +37,7 @@ public class JobOfferController : Controller
 
         counter.Inc();
 
-        var jobOfferList = await _jobOfferService.Filter(paginationParams);
+        var jobOfferList = await _jobOfferService.Filter(paginationParams, query);
         return Ok(jobOfferList.ToPagedList(_mapper.Map<List<JobOfferResponse>>(jobOfferList.Items)));
     }
 
@@ -60,7 +60,7 @@ public class JobOfferController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Save([FromBody] JobOfferPutRequest request)
+    public async Task<IActionResult> Save([FromBody] JobOfferPostRequest request)
     {
         var actionName = ControllerContext.ActionDescriptor.DisplayName;
         using var scope = _tracer.BuildSpan(actionName).StartActive(true);
