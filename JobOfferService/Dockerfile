@@ -3,8 +3,11 @@ WORKDIR /app
 EXPOSE 5006
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
+ARG github_username
+ARG github_pat
 WORKDIR /src
 COPY JobOfferService/JobOfferService.csproj JobOfferService/
+COPY config/NuGet.Config .
 RUN dotnet restore JobOfferService/JobOfferService.csproj
 COPY . .
 WORKDIR /src/JobOfferService

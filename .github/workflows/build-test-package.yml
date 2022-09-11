@@ -84,3 +84,6 @@ jobs:
           push: true
           cache-from: type=registry,ref=${{ env.DOCKERHUB_REPO }}:buildcache
           cache-to: type=registry,ref=${{ env.DOCKERHUB_REPO }}:buildcache,mode=max
+          build-args: |
+            github_username=ekipa
+            github_pat=${{ secrets.GITHUB_TOKEN }}
