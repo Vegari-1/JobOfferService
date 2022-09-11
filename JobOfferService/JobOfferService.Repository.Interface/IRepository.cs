@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using JobOfferService.Model.MongoDB;
 using MongoDB.Driver;
-using PostService.Repository.Interface.Pagination;
+using JobOfferService.Repository.Interface.Pagination;
 
 namespace JobOfferService.Repository.Interface;
 

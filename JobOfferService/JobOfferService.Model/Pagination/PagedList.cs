@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace PostService.Repository.Interface.Pagination;
+namespace JobOfferService.Repository.Interface.Pagination;
 
 public class PagedList<T>
 {

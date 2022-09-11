@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Xunit;
 
 using JobOfferService.Dto;
-using PostService.Repository.Interface.Pagination;
+using JobOfferService.Repository.Interface.Pagination;
 using BusService.Contracts;
 
 namespace JobOfferService.IntegrationTests;

@@ -4,7 +4,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using JobOfferService.Repository.Interface;
 using JobOfferService.Model.MongoDB;
-using PostService.Repository.Interface.Pagination;
+using JobOfferService.Repository.Interface.Pagination;
 
 namespace JobOfferService.Repository;
 
