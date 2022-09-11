@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using JobOfferService.Model;
 using JobOfferService.Repository.Interface;
 using JobOfferService.Service.Interface;
@@ -22,9 +23,15 @@ public class JobOfferService : IJobOfferService
         return jobOffer;
     }
 
-    public Task<PagedList<JobOffer>> Filter(PaginationParams paginationParams)
+    public Task<PagedList<JobOffer>> Filter(PaginationParams paginationParams, string? query)
     {
-        return _jobOfferRepository.FilterByAsync(_ => true, paginationParams);
+        Expression<Func<JobOffer, bool>> filter = string.IsNullOrEmpty(query) ?
+            (JobOffer x) => true :
+            (JobOffer x) =>
+                x.PositionName.ToLower().Contains(query.ToLower()) ||
+                x.Description.ToLower().Contains(query.ToLower());
+
+        return _jobOfferRepository.FilterByAsync(filter, paginationParams);
     }
 
     public Task<JobOffer> Get(string id)
