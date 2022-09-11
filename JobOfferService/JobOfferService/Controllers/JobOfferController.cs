@@ -7,7 +7,7 @@ using Prometheus;
 using JobOfferService.Dto;
 using JobOfferService.Model;
 using JobOfferService.Service.Interface;
-using PostService.Repository.Interface.Pagination;
+using JobOfferService.Repository.Interface.Pagination;
 
 namespace JobOfferService;
 

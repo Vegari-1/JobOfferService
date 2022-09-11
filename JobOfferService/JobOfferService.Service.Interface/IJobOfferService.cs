@@ -1,5 +1,5 @@
 ﻿using JobOfferService.Model;
-using PostService.Repository.Interface.Pagination;
+using JobOfferService.Repository.Interface.Pagination;
 
 namespace JobOfferService.Service.Interface;
 

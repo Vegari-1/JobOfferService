@@ -1,8 +1,9 @@
 using System.Linq.Expressions;
+
 using JobOfferService.Model;
 using JobOfferService.Repository.Interface;
 using JobOfferService.Service.Interface;
-using PostService.Repository.Interface.Pagination;
+using JobOfferService.Repository.Interface.Pagination;
 
 namespace JobOfferService.Service;
 public class JobOfferService : IJobOfferService
