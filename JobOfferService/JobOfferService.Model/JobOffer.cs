@@ -1,4 +1,4 @@
-﻿using JobOfferService.Model.MongoDB;
+﻿ using JobOfferService.Model.MongoDB;
 
 namespace JobOfferService.Model;
 
@@ -12,4 +12,3 @@ public class JobOffer : Document
     public string CompanyLink { get; set; }
     public Profile CreatedBy { get; set; }
 }
-
