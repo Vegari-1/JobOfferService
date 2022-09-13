@@ -24,8 +24,10 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
 // Nats
-builder.Services.AddSingleton<IMessageBusService, MessageBusService>();
 builder.Services.Configure<MessageBusSettings>(builder.Configuration.GetSection("Nats"));
+builder.Services.AddSingleton<IMessageBusSettings>(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<MessageBusSettings>>().Value);
+builder.Services.AddSingleton<IMessageBusService, MessageBusService>();
 builder.Services.AddHostedService<JobOfferMessageBusService>();
 
 // Mongo
