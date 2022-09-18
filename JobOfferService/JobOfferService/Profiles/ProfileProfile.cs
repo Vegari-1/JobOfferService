@@ -9,6 +9,5 @@ public class ProfileProfile : AutoMapper.Profile
     {
         // Source -> Target
         CreateMap<Profile, ProfileResponse>();
-        CreateMap<ProfileRequest, Profile>();
     }
 }
