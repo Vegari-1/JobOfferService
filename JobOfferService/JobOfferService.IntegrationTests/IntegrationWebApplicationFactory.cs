@@ -20,6 +20,7 @@ public class IntegrationWebApplicationFactory<TProgram> : WebApplicationFactory<
 
     public readonly string DATABASE_NAME = "test_db";
     public readonly string COLLECTION_NAME = "jobOffer";
+    public readonly string PROFILE_COLLECTION_NAME = "profile";
 
 
     public readonly TestcontainerDatabase mongoContainer;

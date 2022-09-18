@@ -37,6 +37,7 @@ builder.Services.AddSingleton<IMongoDbSettings>(serviceProvider =>
 
 // Repositories
 builder.Services.AddScoped<IJobOfferRepository, JobOfferRepository>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 
 // Services
 builder.Services.AddScoped<IJobOfferService, JobOfferService.Service.JobOfferService>();
@@ -44,6 +45,7 @@ builder.Services.AddScoped<IJobOfferService, JobOfferService.Service.JobOfferSer
 // Sync services
 builder.Services.AddScoped<IJobOfferSyncService, JobOfferService.Service.JobOfferSyncService>();
 builder.Services.AddScoped<IProfileSyncService, JobOfferService.Service.ProfileSyncService>();
+builder.Services.AddScoped<IConnectionSyncService, JobOfferService.Service.ConnectionSyncService>();
 
 // Controllers
 builder.Services.AddControllers();

@@ -12,7 +12,8 @@
     "JobOfferService": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:27316",
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:80",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

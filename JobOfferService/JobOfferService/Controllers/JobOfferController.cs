@@ -29,7 +29,7 @@ public class JobOfferController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] PaginationParams paginationParams, string? query)
+    public async Task<IActionResult> Get([FromHeader(Name = "profile-id")] Guid userId, [FromQuery] PaginationParams paginationParams, string? query)
     {
         var actionName = ControllerContext.ActionDescriptor.DisplayName;
         using var scope = _tracer.BuildSpan(actionName).StartActive(true);
@@ -37,13 +37,13 @@ public class JobOfferController : Controller
 
         counter.Inc();
 
-        var jobOfferList = await _jobOfferService.Filter(paginationParams, query);
+        var jobOfferList = await _jobOfferService.Filter(userId, paginationParams, query);
         return Ok(jobOfferList.ToPagedList(_mapper.Map<List<JobOfferResponse>>(jobOfferList.Items)));
     }
 
     [HttpGet]
     [Route("{id}")]
-    public async Task<IActionResult> GetById(string id)
+    public async Task<IActionResult> GetById([FromHeader(Name = "profile-id")] Guid userId, string id)
     {
         var actionName = ControllerContext.ActionDescriptor.DisplayName;
         using var scope = _tracer.BuildSpan(actionName).StartActive(true);
@@ -51,7 +51,7 @@ public class JobOfferController : Controller
 
         counter.Inc();
 
-        var jobOffer = await _jobOfferService.Get(id);
+        var jobOffer = await _jobOfferService.Get(userId, id);
 
         if (jobOffer == null)
             return NotFound();
@@ -60,7 +60,7 @@ public class JobOfferController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Save([FromBody] JobOfferPostRequest request)
+    public async Task<IActionResult> Save([FromHeader(Name = "profile-id")] Guid userId, [FromBody] JobOfferPostRequest request)
     {
         var actionName = ControllerContext.ActionDescriptor.DisplayName;
         using var scope = _tracer.BuildSpan(actionName).StartActive(true);
@@ -68,13 +68,13 @@ public class JobOfferController : Controller
 
         counter.Inc();
 
-        var jobOffer = await _jobOfferService.Save(_mapper.Map<JobOffer>(request));
+        var jobOffer = await _jobOfferService.Save(userId, _mapper.Map<JobOffer>(request));
         return StatusCode(StatusCodes.Status201Created, _mapper.Map<JobOfferResponse>(jobOffer));
     }
 
     [HttpPut]
     [Route("{id}")]
-    public async Task<IActionResult> Update(string id, [FromBody] JobOfferPutRequest request)
+    public async Task<IActionResult> Update([FromHeader(Name = "profile-id")] Guid userId, string id, [FromBody] JobOfferPutRequest request)
     {
         var actionName = ControllerContext.ActionDescriptor.DisplayName;
         using var scope = _tracer.BuildSpan(actionName).StartActive(true);
@@ -82,7 +82,7 @@ public class JobOfferController : Controller
 
         counter.Inc();
 
-        var jobOffer = await _jobOfferService.Update(id, _mapper.Map<JobOffer>(request));
+        var jobOffer = await _jobOfferService.Update(userId, id, _mapper.Map<JobOffer>(request));
 
         if (jobOffer == null)
             return NotFound();
@@ -92,7 +92,7 @@ public class JobOfferController : Controller
 
     [HttpDelete]
     [Route("{id}")]
-    public async Task<IActionResult> Delete(string id)
+    public async Task<IActionResult> Delete([FromHeader(Name = "profile-id")] Guid userId, string id)
     {
         var actionName = ControllerContext.ActionDescriptor.DisplayName;
         using var scope = _tracer.BuildSpan(actionName).StartActive(true);
@@ -100,7 +100,7 @@ public class JobOfferController : Controller
 
         counter.Inc();
 
-        await _jobOfferService.Delete(id);
+        await _jobOfferService.Delete(userId, id);
         return Ok();
     }
 }

@@ -9,6 +9,7 @@ using Xunit;
 using JobOfferService.Dto;
 using JobOfferService.Repository.Interface.Pagination;
 using BusService.Contracts;
+using System;
 
 namespace JobOfferService.IntegrationTests;
 
@@ -22,23 +23,27 @@ public class JobOfferControllerTests : IClassFixture<IntegrationWebApplicationFa
     private static readonly string companyLink = "https://www.youtube.com/";
     private static readonly string[] qualifications = new[] { "first", "second", "third" };
 
-    private static readonly string authorGlobalId = "13cda049-60c2-4af3-b7c2-8b135009d851";
+    private static readonly Guid authorGlobalId = Guid.NewGuid();
     private static readonly string authorName = "Author";
     private static readonly string authorSurname = "Creator";
     private static readonly string authorAvatar = "Avatar:asdaswe23r";
     private static readonly string authorEmail = "author@complex.com";
+    private static readonly string authorUsername = "author";
+
 
     public JobOfferControllerTests(IntegrationWebApplicationFactory<Program> factory)
     {
         _factory = factory;
         _client = _factory.CreateClient();
+        _client.DefaultRequestHeaders.Add("profile-id", authorGlobalId.ToString());
     }
 
     [Fact]
     public async Task GetJobOffers_CorrectData_CollectionJobOfferResponse()
     {
         // Given
-        string jobOfferId = _factory.InsertJobOffer(positionName, description, companyLink, qualifications);
+        string jobOfferId = _factory.InsertJobOffer(positionName, description, companyLink,
+            qualifications, authorName, authorSurname, authorGlobalId);
 
         // When
         var response = await _client.GetAsync("/api/joboffer");
@@ -69,19 +74,12 @@ public class JobOfferControllerTests : IClassFixture<IntegrationWebApplicationFa
             PositionName = positionName,
             Description = description,
             CompanyLink = companyLink,
-            Qualifications = qualifications,
-            Profile = new()
-            {
-                Avatar = authorAvatar,
-                Name = authorName,
-                Surname = authorSurname,
-                GlobalId = authorGlobalId
-            }
-
+            Qualifications = qualifications
         };
         var requestContent = new StringContent(JsonConvert.SerializeObject(jobOffer), Encoding.UTF8, "application/json");
 
         // When
+        _factory.InsertProfile(authorName, authorSurname, authorGlobalId);
         var response = await _client.PostAsync("/api/joboffer", requestContent);
 
         // Then
@@ -99,8 +97,7 @@ public class JobOfferControllerTests : IClassFixture<IntegrationWebApplicationFa
 
         Assert.Equal(authorName, responseContentObject?.Profile?.Name);
         Assert.Equal(authorSurname, responseContentObject?.Profile?.Surname);
-        Assert.Equal(authorAvatar, responseContentObject?.Profile?.Avatar);
-        Assert.Equal(authorGlobalId, responseContentObject?.Profile?.GlobalId);
+        Assert.Equal(authorGlobalId.ToString(), responseContentObject?.Profile?.GlobalId);
 
         // Rollback
         _factory.DeleteJobOfferById(responseContentObject.Id);
@@ -113,9 +110,9 @@ public class JobOfferControllerTests : IClassFixture<IntegrationWebApplicationFa
     {
         // Given 
         var newAuthorName = "Decompositor";
-        var jobOfferId = _factory.InsertJobOffer(positionName, description, companyLink, qualifications, authorName, authorSurname);
+        var jobOfferId = _factory.InsertJobOffer(positionName, description, companyLink, qualifications, authorName, authorSurname, authorGlobalId);
         var jobOffer = _factory.GetJobOfferById(jobOfferId);
-        var profile = new ProfileContract(jobOffer.CreatedBy.GlobalId, newAuthorName, authorSurname, authorEmail);
+        var profile = new ProfileContract(jobOffer.CreatedBy.GlobalId, newAuthorName, authorSurname, authorEmail, authorUsername, authorAvatar);
 
         // When
         _factory.PublishProfileUpdate(profile);

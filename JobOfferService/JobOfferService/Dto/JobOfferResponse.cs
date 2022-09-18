@@ -3,7 +3,6 @@
 public class JobOfferResponse
 {
     public string Id { get; set; }
-    public string GlobalId { get; set; }
     public string PositionName { get; set; }
     public string Description { get; set; }
     public IList<string> Qualifications { get; set; }
