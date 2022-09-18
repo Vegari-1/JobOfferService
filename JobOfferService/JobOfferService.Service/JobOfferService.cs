@@ -1,10 +1,12 @@
 using System.Linq.Expressions;
 
+using MongoDB.Bson;
+
 using JobOfferService.Model;
 using JobOfferService.Repository.Interface;
 using JobOfferService.Service.Interface;
 using JobOfferService.Repository.Interface.Pagination;
-using MongoDB.Bson;
+using JobOfferService.Service.Interface.Exceptions;
 
 namespace JobOfferService.Service;
 public class JobOfferService : IJobOfferService
@@ -25,7 +27,7 @@ public class JobOfferService : IJobOfferService
     {
         var profile = await _profileRepository.FindOneAsync(x => x.GlobalId == userId);
         if (profile == null)
-            throw new InvalidOperationException("User is not existing!");
+            throw new EntityNotFoundException(typeof(Profile), userId.ToString());
 
         jobOffer.GlobalId = Guid.NewGuid();
         jobOffer.CreatedBy = profile;
@@ -38,7 +40,7 @@ public class JobOfferService : IJobOfferService
     {
         var profile = await _profileRepository.FindOneAsync(x => x.GlobalId == userId);
         if (profile == null)
-            throw new InvalidOperationException("User is not existing!");
+            throw new EntityNotFoundException(typeof(Profile), userId.ToString());
 
         Expression<Func<JobOffer, bool>> filter = string.IsNullOrEmpty(query) ?
             GetJobOfferFilter(profile) :
@@ -59,7 +61,7 @@ public class JobOfferService : IJobOfferService
         var jobOfferFromDb = await _jobOfferRepository.FindOneAsync(x => x.Id == objectId && x.CreatedBy.GlobalId == userId);
 
         if (jobOfferFromDb == null)
-            return default;
+            throw new EntityNotFoundException(typeof(JobOffer), id.ToString());
 
         jobOfferFromDb.PositionName = jobOffer.PositionName;
         jobOfferFromDb.Description = jobOffer.Description;
@@ -76,7 +78,7 @@ public class JobOfferService : IJobOfferService
         var jobOffer = await _jobOfferRepository.FindOneAsync(x => x.Id == objectId && x.CreatedBy.GlobalId == userId);
 
         if (jobOffer == null)
-            throw new InvalidOperationException("Job offer is not existing!");
+            throw new EntityNotFoundException(typeof(JobOffer), id.ToString());
 
         await _jobOfferRepository.DeleteByIdAsync(id);
     }

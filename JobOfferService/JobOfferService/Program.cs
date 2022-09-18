@@ -16,12 +16,17 @@ using JobOfferService.Repository.Interface;
 using JobOfferService.Service.Interface;
 using JobOfferService.Middlwares;
 using JobOfferService.JobOfferMessaging;
+using JobOfferService.Middlewares.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Default Logger
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
+
+// Event middleware deps
+builder.Services.Configure<AppConfig>(
+    builder.Configuration.GetSection("AppConfig"));
 
 // Nats
 builder.Services.Configure<MessageBusSettings>(builder.Configuration.GetSection("Nats"));
@@ -46,6 +51,7 @@ builder.Services.AddScoped<IJobOfferService, JobOfferService.Service.JobOfferSer
 builder.Services.AddScoped<IJobOfferSyncService, JobOfferService.Service.JobOfferSyncService>();
 builder.Services.AddScoped<IProfileSyncService, JobOfferService.Service.ProfileSyncService>();
 builder.Services.AddScoped<IConnectionSyncService, JobOfferService.Service.ConnectionSyncService>();
+builder.Services.AddScoped<IEventSyncService, JobOfferService.Service.EventSyncService>();
 
 // Controllers
 builder.Services.AddControllers();
@@ -97,13 +103,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
 app.MapControllers();
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseEventSenderMiddleware();
 
 // Prometheus metrics
 app.UseMetricServer();
